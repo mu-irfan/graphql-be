@@ -15,7 +15,29 @@ const createTodo = async (title) => {
   return res.rows[0];
 };
 
+// ==== mark item as completed ====
+const toggleTodoCompleted = async (id) => {
+  const res = await pool.query(
+    `UPDATE todos
+     SET completed = NOT completed
+     WHERE id = $1
+     RETURNING *`,
+    [id]
+  );
+  return res.rows[0];
+};
+
+// ==== delete item from todos ====
+const deleteTodo = async (id) => {
+  const res = await pool.query(`DELETE FROM todos WHERE id = $1 RETURNING id`, [
+    id,
+  ]);
+  return res.rows[0]?.id;
+};
+
 module.exports = {
   getTodos,
   createTodo,
+  toggleTodoCompleted,
+  deleteTodo,
 };

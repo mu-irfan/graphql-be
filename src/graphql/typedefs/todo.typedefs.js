@@ -13,6 +13,8 @@ const todoTypeDefs = gql`
 
   type Mutation {
     createTodo(title: String!): Todo
+    toggleTodoCompleted(id: ID!): Todo
+    deleteTodo(id: ID!): ID
   }
 `;
 
